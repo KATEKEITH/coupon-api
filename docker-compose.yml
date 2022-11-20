@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  coupon-db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=coupon
+      - MYSQL_ROOT_PASSWORD=root-pass
+      - MYSQL_USER=coupon-svc
+      - MYSQL_PASSWORD=coupon-pass
+      - TZ=UTC
+    command: # 명령어 실행
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --lower_case_table_names=1
+    volumes:
+      - ./mysql:/var/lib/mysql
