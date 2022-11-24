@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>선착순 이벤트</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      .fieldError {
+        border-color: #bd2130;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>특정 일자 별 보상 받은 사용자 조회</h2>
+    <form
+      role="form"
+      action="/reward/result"
+      th:object="${RewardResultRequest}"
+      method="post"
+    >
+      <div class="form-group">
+        <label th:for="date">조회 일자를 입력해주세요.</label>
+        <input
+          type="text"
+          th:field="*{date}"
+          class="form-control"
+          placeholder="yyyy-MM-dd"
+          th:class="${#fields.hasErrors('date')}? 'form-control fieldError' : 'form-control'"
+        />
+        <p th:if="${#fields.hasErrors('date')}" th:errors="*{date}">
+          Incorrect date
+        </p>
+      </div>
+      <button type="submit" class="btn btn-primary">조회</button>
+    </form>
+  </body>
+</html>

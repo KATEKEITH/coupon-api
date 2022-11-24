@@ -4,17 +4,21 @@ server:
 spring:
   lifecycle:
     timeout-per-shutdown-phase: 20s
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
   jpa:
     show-sql: true
     #    database-platform: mysql
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3306/coupon?serverTimezone=UTC&characterEncoding=UTF-8
-      username: coupon-svc
-      password: coupon-pass
+      jdbc-url: jdbc:mysql://localhost:3306/reward?serverTimezone=UTC&characterEncoding=UTF-8
+      username: reward-svc
+      password: reward-pass
   # flyway:
   #   user: order-svc
   #   password: order-pass
@@ -28,3 +32,4 @@ spring:
 
 # logging:
 #   config: classpath:logback-local.xml
+

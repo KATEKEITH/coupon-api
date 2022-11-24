@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>리워드 지급 내역</title>
+    <meta charset="UTF-8" />
+    <style>
+      table {
+        width: 100%;
+        border: 1px solid #444444;
+        text-align: center;
+      }
+      th,
+      td {
+        border: 1px solid #444444;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>리워드 지급 내역</h3>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>날짜</th>
+      </tr>
+      <tr th:each="reward : ${rewards}">
+        <td th:text="${reward.id}"></td>
+        <td>
+          <a
+            th:text="${reward.email}"
+            th:href="@{detail/{id}(id = ${reward.email})}"
+          ></a>
+        </td>
+        <td th:text="${reward.createdDate}"></td>
+      </tr>
+    </table>
+  </body>
+</html>

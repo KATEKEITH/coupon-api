@@ -1,16 +1,16 @@
 version: "3.7"
 services:
-  coupon-db:
+  reward-db:
     image: mysql:8.0
     cap_add:
       - SYS_NICE
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_DATABASE=coupon
+      - MYSQL_DATABASE=reward
       - MYSQL_ROOT_PASSWORD=root-pass
-      - MYSQL_USER=coupon-svc
-      - MYSQL_PASSWORD=coupon-pass
+      - MYSQL_USER=reward-svc
+      - MYSQL_PASSWORD=reward-pass
       - TZ=UTC
     command: # 명령어 실행
       - --character-set-server=utf8mb4

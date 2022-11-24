@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>선착순 이벤트</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      .fieldError {
+        border-color: #bd2130;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>선착순 10명 100P 리워드 지급 이벤트</h2>
+    <form
+      role="form"
+      action="/reward/1"
+      th:object="${rewardForm}"
+      method="post"
+    >
+      <div class="form-group">
+        <label th:for="email">이메일</label>
+        <input
+          type="text"
+          th:field="*{email}"
+          class="form-control"
+          placeholder="이메일을 입력하세요"
+          th:class="${#fields.hasErrors('email')}? 'form-control fieldError' : 'form-control'"
+        />
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+          Incorrect date
+        </p>
+      </div>
+
+      <button type="submit" class="btn btn-primary">받기</button>
+    </form>
+  </body>
+</html>
