@@ -1,16 +1,10 @@
 package dev.reward.service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import dev.reward.domain.Event;
 import dev.reward.domain.Reward;
 import dev.reward.domain.User;
-import dev.reward.excpetion.NotEnoughStockException;
 import dev.reward.interfaces.dto.RewardForm;
 import dev.reward.interfaces.dto.RewardResultRequest;
 import dev.reward.interfaces.dto.RewardResultResponse;
-import dev.reward.repository.EventRepository;
 import dev.reward.repository.RewardRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -31,11 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RewardService {
 
-    private final EventRepository eventRepository;
-
     private final RewardRepository rewardRepository;
-
-    private final UserService userService;
 
     public Long register(User user, RewardForm rewardForm) {
         checkDuplicateAppy(user);
@@ -74,6 +62,27 @@ public class RewardService {
         } else {
             return false;
         }
+    }
+
+    public Long checkPoint(User user, Event event, Long point) {
+        LocalDate today = LocalDateTime.now().toLocalDate();
+        Period diff = Period.between(event.getCreatedDate().toLocalDate(), today);
+
+        if (Math.floorMod(diff.getDays(), 10) == 2) {
+            if (checkDays(user.getId(), 2)) {
+                point += 300L;
+            }
+        } else if (Math.floorMod(diff.getDays(), 10) == 4) {
+            if (checkDays(user.getId(), 4)) {
+                point += 500L;
+            }
+        } else if (Math.floorMod(diff.getDays(), 10) == 9) {
+            if (checkDays(user.getId(), 9)) {
+                point += 1000L;
+            }
+        }
+
+        return point;
     }
 
 }

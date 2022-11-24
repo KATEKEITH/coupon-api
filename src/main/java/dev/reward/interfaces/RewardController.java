@@ -4,12 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -95,23 +92,8 @@ public class RewardController {
             eventService.decrease(eventId, 1L);
         }
 
-        LocalDate today = LocalDateTime.now().toLocalDate();
-        Period diff = Period.between(event.getCreatedDate().toLocalDate(), today);
-        if (Math.floorMod(diff.getDays(), 10) == 2) {
-            if (rewardService.checkDays(user.getId(), 2)) {
-                point += 300L;
-            }
-        } else if (Math.floorMod(diff.getDays(), 10) == 4) {
-            if (rewardService.checkDays(user.getId(), 4)) {
-                point += 500L;
-            }
-        } else if (Math.floorMod(diff.getDays(), 10) == 9) {
-            if (rewardService.checkDays(user.getId(), 9)) {
-                point += 1000L;
-            }
-        }
-
-        userService.update(rewardForm.getEmail(), point);
+        Long processedPoint = rewardService.checkPoint(user, event, point);
+        userService.update(rewardForm.getEmail(), processedPoint);
         return "success";
     }
 
