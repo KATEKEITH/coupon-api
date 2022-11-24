@@ -65,6 +65,12 @@ public class RewardController {
     public String read(Model model,
             @Valid @ModelAttribute("RewardResultRequest") RewardResultRequest rewardResultRequest,
             BindingResult result) {
+
+        // 일자 입력을 안하면
+        if (result.hasErrors()) {
+            return "search";
+        }
+
         List<RewardResultResponse> rewards = rewardService.search(rewardResultRequest);
         model.addAttribute("rewards", rewards);
         return "searchResult";
