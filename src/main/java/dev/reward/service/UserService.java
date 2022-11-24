@@ -16,12 +16,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    // @Transactional(readOnly = true)
-    // public UserResponse findEntityById(Long userId) {
-    // Optional<User> user = userRepository.findById(userId);
-    // return UserResponse.of(user);
-    // }
-
     @Transactional(readOnly = true)
     public DetailResponse findEntityByEmail(String email) {
         User user = userRepository.findByEmail(email);
