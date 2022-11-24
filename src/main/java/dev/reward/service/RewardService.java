@@ -34,10 +34,11 @@ public class RewardService {
 
     @Transactional(readOnly = true)
     public List<RewardResultResponse> search(RewardResultRequest rewardResultRequest) {
-        LocalDateTime formatLocalDateTimeNow = LocalDateTime.parse(rewardResultRequest.getDate() + " 00:00:00",
+        LocalDateTime today = LocalDateTime.parse(rewardResultRequest.getDate() + " 00:00:00",
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime tomorrow = today.plusDays(1);
         List<Reward> rewards = rewardRepository
-                .findAllByCreatedDateGreaterThanEqualOrderByCreatedDateAsc(formatLocalDateTimeNow);
+                .findAllByCreatedDateBetweenOrderByCreatedDateAsc(today, tomorrow);
 
         return RewardResultResponse.toList(rewards);
     }
@@ -46,7 +47,9 @@ public class RewardService {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime ldt = LocalDateTime.of(now.getYear(),
                 now.getMonth(), now.getDayOfMonth(), 0, 0, 0);
+
         List<Reward> reward = rewardRepository.findAllByUserAndCreatedDateGreaterThanEqual(user, ldt);
+
         if (!reward.isEmpty()) {
             throw new IllegalStateException("이미 참여한 이메일입니다.");
         }

@@ -19,7 +19,7 @@ public interface RewardRepository extends JpaRepository<Reward, Long> {
 
         List<Reward> findAllByUserAndCreatedDateGreaterThanEqual(User user, LocalDateTime today);
 
-        List<Reward> findAllByCreatedDateGreaterThanEqualOrderByCreatedDateAsc(LocalDateTime today);
+        List<Reward> findAllByCreatedDateBetweenOrderByCreatedDateAsc(LocalDateTime today, LocalDateTime tomorrow);
 
         @Query("select distinct reward from Reward as reward join fetch reward.user where reward.createdDate between DATE(:startDate) and DATE(:endDate)+1")
         List<Reward> findByCreatedDateBetween(@Param("startDate") String startDate,
