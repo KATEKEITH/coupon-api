@@ -11,25 +11,21 @@ spring:
   jpa:
     show-sql: true
     #    database-platform: mysql
-    hibernate:
-      ddl-auto: create
+    # hibernate:
+    #   ddl-auto: create
+  sql:
+    init:
+      encoding: UTF-8
+      mode: always
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://localhost:3306/reward?serverTimezone=UTC&characterEncoding=UTF-8
       username: reward-svc
       password: reward-pass
-  # flyway:
-  #   user: order-svc
-  #   password: order-pass
-  #   schemas: order
-  #   url: jdbc:mysql://localhost:3306/order?serverTimezone=UTC&characterEncoding=UTF-8
-  #   enabled: true
 #  h2:
 #    console:
 #      enabled: true
 #      path: /h2-console
-
 # logging:
 #   config: classpath:logback-local.xml
-

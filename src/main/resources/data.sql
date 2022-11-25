@@ -1,0 +1,1 @@
+INSERT INTO event (title, quantity, created_date) VALUES ('선착순 이벤트', 10, now());
